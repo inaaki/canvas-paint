@@ -1,7 +1,7 @@
 import Count from './components/Count';
 
 function App() {
-  return 'app component'
+  return <Count />;
 }
 
 export default App;
