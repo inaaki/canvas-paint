@@ -1,9 +1,13 @@
 .canvas {
-  padding: 1rem;
+  aspect-ratio: 2/1.25;
   border: 0.1rem solid rgba(0, 0, 0, 0.25);
-  min-height: 50vh;
-  min-width: 50vw;
-  resize: both;
   margin: 2rem 0 0;
+  max-height: 75rem;
+  max-width: 144rem;
+  min-height: 35rem;
+  min-width: 50rem;
   overflow: auto;
+  padding: 1rem;
+  resize: both;
+  width: 50vw;
 }
