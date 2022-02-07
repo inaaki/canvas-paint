@@ -1,3 +1,9 @@
+.container {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+}
 .colorBtn {
   border: 0;
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.35);

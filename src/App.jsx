@@ -9,7 +9,7 @@ function App() {
   const [color, setColor] = useState(INITIAL_COLOR);
 
   return (
-    <div>
+    <div className={style.container}>
       <Paint color={color} />
       <button
         className={style.colorBtn}
