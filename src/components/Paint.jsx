@@ -4,8 +4,6 @@ import style from '../styles/Paint.module.css';
 import ColorPicker from './ColorPicker';
 
 function Paint({ color }) {
-  const [loading, setLoading] = useState(true);
-
   const [activeColor, setActiveColor] = useState('');
   const [colors, setColors] = useState([]);
 
@@ -14,7 +12,6 @@ function Paint({ color }) {
     const controller = new AbortController();
     const { signal } = controller;
     //
-    setLoading(true);
     (() => {
       const baseColor = color.slice(1);
       fetch(
@@ -26,9 +23,8 @@ function Paint({ color }) {
           const result = res.colors.map((item) => item.hex.value);
           setColors(result);
           setActiveColor(res.colors[0].hex.value);
-          setLoading(false);
         })
-        .catch();
+        .catch(() => {});
     })();
 
     return () => {
@@ -36,7 +32,6 @@ function Paint({ color }) {
     };
   }, [color]);
 
-  if (loading) return <p>...loading...</p>;
   return (
     <div className={style.container}>
       {colors.map((item) => (
