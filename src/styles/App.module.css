@@ -1,0 +1,16 @@
+.colorBtn {
+  border: 0;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.35);
+  display: block;
+  height: auto;
+  margin: auto;
+  outline: 0;
+  padding: 1rem 0.5rem;
+  width: max-content;
+  cursor: pointer;
+  transition: 100ms all ease;
+  font-size: 1.4rem;
+}
+.colorBtn:active {
+  transform: scale(1.05);
+}
