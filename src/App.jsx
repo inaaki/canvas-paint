@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Canvas from './components/Canvas';
 import Paint from './components/Paint';
 import style from './styles/App.module.css';
 import getRandomColor from './utils/randomColor';
@@ -11,6 +12,7 @@ function App() {
   return (
     <div className={style.container}>
       <Paint color={color} />
+
       <button
         className={style.colorBtn}
         type="button"
@@ -20,6 +22,7 @@ function App() {
       >
         Generate Color
       </button>
+      <Canvas />
     </div>
   );
 }
