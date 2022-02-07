@@ -10,7 +10,7 @@ function Playground() {
   }, [count]);
 
   return (
-    <div style={{ borderTop: `10px solid ${color}` }}>
+    <div style={{ borderTop: `20px solid ${color}` }}>
       {count}{' '}
       <button
         type="button"
