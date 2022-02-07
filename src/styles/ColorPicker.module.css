@@ -1,0 +1,17 @@
+:root {
+  --col-con-width: 2rem;
+}
+
+.container {
+  display: inline-block;
+  width: var(--col-con-width);
+  height: var(--col-con-width);
+  border: 0.2rem solid #000000;
+  margin: 0 1rem;
+  transition: 200ms transform ease;
+}
+
+.active {
+  transform: scale(1.2) translateY(-2px);
+  box-shadow: 0 15px 0px -8px black;
+}
