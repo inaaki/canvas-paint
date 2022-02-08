@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Canvas from './components/Canvas';
 import Paint from './components/Paint';
+import WindowSize from './components/WindowSize';
 import style from './styles/App.module.css';
 import getRandomColor from './utils/randomColor';
 
@@ -23,6 +24,7 @@ function App() {
         Generate Color
       </button>
       <Canvas />
+      <WindowSize />
     </div>
   );
 }
