@@ -57,8 +57,11 @@ function Canvas({ color }) {
           const { mx, my } = getMousePosition(e, pos);
           ctx.strokeStyle = color;
           ctx.lineWidth = 2;
+          ctx.linecap = 'round';
           ctx.beginPath();
           ctx.moveTo(mx, my);
+          ctx.lineTo(mx - 1, my - 1);
+          ctx.stroke();
         }}
         onMouseMove={(e) => {
           const { pos, ctx } = canvas;
