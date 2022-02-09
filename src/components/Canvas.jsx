@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import PropTypes from 'prop-types';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import style from '../styles/Canvas.module.css';
@@ -7,6 +8,10 @@ function Canvas({ color }) {
   // measured dom ref
   const canvasRef = useCallback((node) => {
     if (node !== null) {
+      // important!! responsive canvas size
+      node.width = window.innerWidth * 0.6;
+      node.height = window.innerHeight * 0.6;
+
       const { x, y } = node.getBoundingClientRect();
       const element = {
         self: node,
@@ -48,8 +53,6 @@ function Canvas({ color }) {
   return (
     <>
       <canvas
-        width={700}
-        height={600}
         ref={canvasRef}
         id={style.canvas}
         onMouseDown={(e) => {
