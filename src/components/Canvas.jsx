@@ -1,11 +1,48 @@
 import PropTypes from 'prop-types';
-import React, { memo, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import style from '../styles/Canvas.module.css';
 
 function Canvas({ color }) {
-  const canvasRef = useRef();
-  const position = useRef({ mx: 0, my: 0 });
-  const ctxRef = useRef();
+  const [canvas, setCanvas] = useState({});
+  // measured dom ref
+  const canvasRef = useCallback((node) => {
+    if (node !== null) {
+      const { x, y } = node.getBoundingClientRect();
+      const element = {
+        self: node,
+        ctx: node.getContext('2d'),
+        pos: { x, y },
+      };
+      setCanvas(element);
+    }
+  }, []);
+
+  useEffect(() => {
+    function handleCanvasPos() {
+      if (!canvas.self) return;
+      const { x, y } = canvas.self.getBoundingClientRect();
+      setCanvas((prev) => ({
+        ...prev,
+        pos: { x, y },
+      }));
+    }
+    window.addEventListener('resize', handleCanvasPos);
+    window.addEventListener('scroll', handleCanvasPos);
+    return () => {
+      window.removeEventListener('resize', handleCanvasPos);
+      window.removeEventListener('scroll', handleCanvasPos);
+    };
+  }, [canvas]);
+
+  // return mouse position
+  const getMousePosition = useCallback((event, pos) => {
+    const { clientX, clientY } = event;
+    const { x, y } = pos;
+    return {
+      mx: Math.round(clientX - x),
+      my: Math.round(clientY - y),
+    };
+  }, []);
 
   if (!color) return null;
   return (
@@ -16,26 +53,17 @@ function Canvas({ color }) {
         ref={canvasRef}
         id={style.canvas}
         onMouseDown={(e) => {
-          const { clientX, clientY } = e;
-          const { x, y } = canvasRef.current.getBoundingClientRect();
-          position.current.mx = Math.round(clientX - x);
-          position.current.my = Math.round(clientY - y);
-          ctxRef.current = canvasRef.current.getContext('2d');
-          const ctx = ctxRef.current;
-          const { mx, my } = position.current;
+          const { pos, ctx } = canvas;
+          const { mx, my } = getMousePosition(e, pos);
           ctx.strokeStyle = color;
           ctx.lineWidth = 2;
           ctx.beginPath();
           ctx.moveTo(mx, my);
         }}
         onMouseMove={(e) => {
+          const { pos, ctx } = canvas;
           if (e.buttons === 1) {
-            const { clientX, clientY } = e;
-            const { x, y } = canvasRef.current.getBoundingClientRect();
-            position.current.mx = Math.round(clientX - x);
-            position.current.my = Math.round(clientY - y);
-            const ctx = ctxRef.current;
-            const { mx, my } = position.current;
+            const { mx, my } = getMousePosition(e, pos);
             ctx.lineTo(mx, my);
             ctx.stroke();
           }
@@ -45,9 +73,10 @@ function Canvas({ color }) {
         type="button"
         className={style.btn}
         onClick={() => {
-          if (!ctxRef.current) return;
-          const { clientWidth, clientHeight } = canvasRef.current;
-          ctxRef.current.clearRect(0, 0, clientWidth, clientHeight);
+          if (!canvas.ctx) return;
+          const { ctx, self } = canvas;
+          const { clientWidth, clientHeight } = self;
+          ctx.clearRect(0, 0, clientWidth, clientHeight);
         }}
       >
         clear
