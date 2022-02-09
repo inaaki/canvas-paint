@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Canvas from './components/Canvas';
 import Paint from './components/Paint';
 import WindowSize from './components/WindowSize';
 import useColorSet from './hooks/useColorSet';
@@ -25,7 +26,7 @@ function App() {
       <button className={style.colorBtn} type="button" onClick={setColorSet}>
         Generate Color
       </button>
-      {/* <Canvas /> */}
+      <Canvas color={activeColor} />
       <WindowSize />
     </div>
   );
